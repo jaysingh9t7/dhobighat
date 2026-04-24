@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" fill="none">
+  <rect width="800" height="500" fill="#1e2a4a"/>
+  <path d="M400 120 L400 100 Q400 85 415 85 Q430 85 430 100" stroke="#c9a84c" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <path d="M415 100 L290 210 Q270 230 290 250 L530 250 Q550 230 530 210 Z" stroke="#c9a84c" stroke-width="6" fill="#1e3460" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="400" y="320" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="32" font-weight="700" fill="white">DhobiGhat</text>
+  <text x="400" y="360" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#c9a84c">Your Premium Cleaning &amp; Revitalization Partners</text>
+</svg>

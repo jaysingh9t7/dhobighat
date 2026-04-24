@@ -1,0 +1,28 @@
+{
+  "overview": "DhobiGhat is a premium laundry and dry cleaning booking platform for Mumbai-based customers. Users can schedule pickups, track their laundry requests, view pricing, and pay via UPI — all from a mobile-friendly web app. Admins manage orders, prices, payments, and customer loyalty discounts.",
+  "features": [
+    "Splash hero page with sliding background carousel and service highlights",
+    "5 service types: Dry Cleaning, Wash & Steam Iron, Wash & Fold, Shoe Cleaning, Steam Iron",
+    "7-day pickup scheduler with time slots and express service toggle",
+    "Phone number registration with OTP verification",
+    "User dashboard with saved addresses and pickup management",
+    "My Request List with admin-controlled status tracking (Pickup Done, Drop Done)",
+    "Reschedule pickup with 1-hour constraint enforcement",
+    "Full price list with 5 category tabs (Men, Women, Kids, Household, Shoes)",
+    "UPI payment integration with configurable payment ID",
+    "Separate admin login with rate management, order tracking, payment verification",
+    "Loyalty tier automation with auto-discount at checkout",
+    "Fully configurable assets, images, logo, and backend URLs for GoDaddy migration"
+  ],
+  "category": "ecommerce",
+  "tags": [
+    "laundry",
+    "dry-cleaning",
+    "booking",
+    "india",
+    "upi-payment",
+    "admin-panel",
+    "mobile-first"
+  ],
+  "last_updated": "2026-04-08T09:27:43.070Z"
+}

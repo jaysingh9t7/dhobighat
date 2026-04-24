@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80" fill="none">
+  <rect width="200" height="80" rx="4" fill="#1e2a4a"/>
+  <!-- Hanger icon -->
+  <path d="M40 28 L40 22 Q40 18 44 18 Q48 18 48 22" stroke="#c9a84c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <path d="M44 22 L20 44 Q16 48 20 52 L68 52 Q72 48 68 44 Z" stroke="#c9a84c" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Text -->
+  <text x="82" y="38" font-family="DM Sans, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Dhobi</text>
+  <text x="82" y="58" font-family="DM Sans, sans-serif" font-size="18" font-weight="700" fill="#c9a84c">Ghat</text>
+</svg>

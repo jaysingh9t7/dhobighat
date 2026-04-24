@@ -1,0 +1,236 @@
+type UserProfile = 
+ record {
+   addresses: vec Address;
+   createdAt: int;
+   email: text;
+   id: principal;
+   isPasswordConfigured: bool;
+   isVerified: bool;
+   name: text;
+   otpCode: opt text;
+   otpExpiry: opt int;
+   passwordHash: text;
+   phone: text;
+ };
+type ServiceType = 
+ variant {
+   dryCleaning;
+   shoeCleaning;
+   steamIron;
+   washFold;
+   washSteamIron;
+ };
+type Result_5 = 
+ variant {
+   err: text;
+   ok: AdminSession;
+ };
+type Result_4 = 
+ variant {
+   err: text;
+   ok: PaymentRecordShared;
+ };
+type Result_3 = 
+ variant {
+   err: text;
+   ok: PickupRequest;
+ };
+type Result_2 = 
+ variant {
+   err: text;
+   ok: UserProfile;
+ };
+type Result_1 = 
+ variant {
+   err: text;
+   ok: text;
+ };
+type Result = 
+ variant {
+   err: text;
+   ok: bool;
+ };
+type RepeaterCategory = 
+ record {
+   discountPercent: float64;
+   name: text;
+   phone: text;
+   qualifyingOrderCount: int;
+   tier: text;
+   totalPickups: int;
+   userId: principal;
+ };
+type PriceUnit = 
+ variant {
+   perKg;
+   perMeter;
+   perPiece;
+   perSeat;
+ };
+type PriceItem = 
+ record {
+   category: PriceCategory;
+   dryCleaningPrice: opt float64;
+   id: text;
+   ironingPrice: opt float64;
+   itemName: text;
+   steamIroningPrice: opt float64;
+   unit: PriceUnit;
+   updatedAt: int;
+   washFoldPrice: opt float64;
+ };
+type PriceCategory = 
+ variant {
+   bulk;
+   household;
+   kids;
+   men;
+   shoes;
+   women;
+ };
+type PickupStatus = 
+ variant {
+   cancelled;
+   dropDone;
+   pending;
+   pickupDone;
+ };
+type PickupRequest = 
+ record {
+   addressId: text;
+   createdAt: int;
+   discountPercent: opt float64;
+   id: text;
+   isExpress: bool;
+   isPaid: bool;
+   paymentId: opt text;
+   scheduledDate: int;
+   serviceIds: vec ServiceType;
+   status: PickupStatus;
+   timeSlot: text;
+   totalAmount: opt float64;
+   updatedAt: int;
+   userId: principal;
+ };
+type PaymentStatus = 
+ variant {
+   failed;
+   paid;
+   pending;
+   refunded;
+ };
+type PaymentRecordShared = 
+ record {
+   amount: float64;
+   createdAt: int;
+   discountPercent: float64;
+   finalAmount: float64;
+   id: text;
+   markedByAdmin: bool;
+   pickupId: text;
+   status: PaymentStatus;
+   updatedAt: int;
+   upiTransactionId: opt text;
+   userId: principal;
+ };
+type LoyaltyStats = 
+ record {
+   discountPercent: float64;
+   ordersToNextTier: int;
+   qualifyingOrderCount: int;
+   tier: text;
+   totalPickups: int;
+   userId: principal;
+ };
+type DiscountTier = 
+ record {
+   description: text;
+   id: text;
+   name: text;
+   percentage: float64;
+ };
+type AdminStats = 
+ record {
+   completedPickups: int;
+   pendingPayments: int;
+   pendingPickups: int;
+   totalOrders: int;
+   totalRevenue: float64;
+   totalUsers: int;
+ };
+type AdminSession = 
+ record {
+   email: text;
+   expiresAt: int;
+   token: text;
+ };
+type Address = 
+ record {
+   building: text;
+   city: text;
+   country: text;
+   flatNo: text;
+   id: text;
+   isDefault: bool;
+   landmark: text;
+   pinCode: text;
+   society: text;
+   state: text;
+ };
+service : {
+  addAddress: (userId: principal, address: Address) -> (Result_1);
+  addDiscountTier: (tier: DiscountTier) -> (Result_1);
+  addPriceItem: (item: PriceItem) -> (Result_1);
+  adminLogin: (email: text, password: text) -> (Result_5);
+  assignCustomerDiscount: (userId: principal, tierId: text) -> (Result);
+  checkPasswordResetRequired: () -> (bool);
+  createPayment: (userId: principal, pickupId: text, amount: float64) ->
+   (Result_1);
+  createPickup: (serviceIds: vec ServiceType, scheduledDate: int, timeSlot:
+   text, addressId: text, isExpress: bool) -> (Result_1);
+  generateOTP: (phone: text) -> (Result_1);
+  generateOTPForPasswordReset: (phone: text) -> (Result_1);
+  getAddresses: (userId: principal) -> (vec Address) query;
+  getAdminStats: () -> (AdminStats);
+  getAllPayments: () -> (vec PaymentRecordShared);
+  getAllPickups: () -> (vec PickupRequest) query;
+  getAllPrices: () -> (vec PriceItem) query;
+  getCustomerDiscount: (userId: principal) -> (opt DiscountTier) query;
+  getDiscountTiers: () -> (vec DiscountTier) query;
+  getLoyaltyStats: () -> (vec LoyaltyStats) query;
+  getMyLoyaltyStats: () -> (LoyaltyStats) query;
+  getPayment: (paymentId: text) -> (Result_4);
+  getPickup: (pickupId: text) -> (Result_3) query;
+  getPricesByCategory: (category: PriceCategory) -> (vec PriceItem) query;
+  getRepeaterCustomers: () -> (vec RepeaterCategory);
+  getUser: (userId: principal) -> (Result_2) query;
+  getUserPayments: (userId: principal) -> (vec PaymentRecordShared);
+  getUserPickups: () -> (vec PickupRequest) query;
+  initAdminCredentials: () -> ();
+  initDefaultDiscountTiers: () -> ();
+  initDefaultPrices: () -> ();
+  loginUser: (phone: text, password: text) -> (Result_2);
+  markPaymentPaid: (paymentId: text, upiTransactionId: text, byAdmin:
+   bool) -> (Result);
+  markPaymentPending: (paymentId: text) -> (Result);
+  markPickupPaid: (pickupId: text, paymentId: text) -> (Result);
+  registerUser: (phone: text, name: text, email: text, password: text) ->
+   (Result_1);
+  reschedulePickup: (pickupId: text, newDate: int, newTimeSlot: text) ->
+   (Result);
+  resetAdminPassword: (currentPassword: text, newPassword: text) -> (Result);
+  resetPasswordWithOTP: (phone: text, otp: text, newPassword: text) ->
+   (Result);
+  setPickupAmount: (pickupId: text, amount: float64, discountPercent:
+   float64) -> (Result);
+  setupPassword: (phone: text, otp: text, newPassword: text) -> (Result);
+  updateAddress: (userId: principal, addressId: text, address: Address) ->
+   (Result);
+  updateDiscountTier: (tierId: text, percentage: float64) -> (Result);
+  updatePickupStatus: (pickupId: text, status: PickupStatus) -> (Result);
+  updatePrice: (itemId: text, ironingPrice: opt float64, steamIroningPrice:
+   opt float64, dryCleaningPrice: opt float64, washFoldPrice: opt float64) ->
+   (Result);
+  validateAdminToken: (token: text) -> (Result);
+  verifyOTP: (phone: text, otp: text) -> (Result);
+}

@@ -1,0 +1,142 @@
+// Version: 1.0.0
+type Address__274428118 =
+  {
+    building : Text;
+    city : Text;
+    country : Text;
+    flatNo : Text;
+    id : Text;
+    isDefault : Bool;
+    landmark : Text;
+    pinCode : Text;
+    society : Text;
+    state : Text
+  };
+type AdminCredentials__449717899 =
+  {
+    email : Text;
+    var lastPasswordReset : Int;
+    var mustResetPassword : Bool;
+    var passwordHash : Text
+  };
+type AdminSession__385189963 = {email : Text; expiresAt : Int; token : Text};
+type CustomerDiscount__600828801 =
+  {assignedAt : Int; assignedBy : Text; tierId : Text; userId : Principal};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type DiscountTier__322229867 =
+  {description : Text; id : Text; name : Text; percentage : Float};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type PaymentRecord__879948694 =
+  {
+    amount : Float;
+    createdAt : Int;
+    discountPercent : Float;
+    finalAmount : Float;
+    id : Text;
+    var markedByAdmin : Bool;
+    pickupId : Text;
+    var status : PaymentStatus__296016569;
+    var updatedAt : Int;
+    var upiTransactionId : ?Text;
+    userId : Principal
+  };
+type PaymentStatus__296016569 = {#failed; #paid; #pending; #refunded};
+type PickupRequest__935325369 =
+  {
+    addressId : Text;
+    createdAt : Int;
+    discountPercent : ?Float;
+    id : Text;
+    isExpress : Bool;
+    isPaid : Bool;
+    paymentId : ?Text;
+    scheduledDate : Int;
+    serviceIds : [ServiceType__354987052];
+    status : PickupStatus__866248445;
+    timeSlot : Text;
+    totalAmount : ?Float;
+    updatedAt : Int;
+    userId : Principal
+  };
+type PickupStatus__866248445 = {#cancelled; #dropDone; #pending; #pickupDone};
+type PriceCategory__988697804 =
+  {#bulk; #household; #kids; #men; #shoes; #women};
+type PriceItem__324255842 =
+  {
+    category : PriceCategory__988697804;
+    dryCleaningPrice : ?Float;
+    id : Text;
+    ironingPrice : ?Float;
+    itemName : Text;
+    steamIroningPrice : ?Float;
+    unit : PriceUnit__767152199;
+    updatedAt : Int;
+    washFoldPrice : ?Float
+  };
+type PriceUnit__767152199 = {#perKg; #perMeter; #perPiece; #perSeat};
+type ServiceType__354987052 =
+  {#dryCleaning; #shoeCleaning; #steamIron; #washFold; #washSteamIron};
+type UserProfile__277265826 =
+  {
+    addresses : [Address__274428118];
+    createdAt : Int;
+    email : Text;
+    id : Principal;
+    isPasswordConfigured : Bool;
+    isVerified : Bool;
+    name : Text;
+    otpCode : ?Text;
+    otpExpiry : ?Int;
+    passwordHash : Text;
+    phone : Text
+  };
+actor {
+  stable adminCredentials : {var value : ?AdminCredentials__449717899};
+  stable adminSessions :
+    {
+      var root : Node__46230540<Text, AdminSession__385189963>;
+      var size : Nat__490723111
+    };
+  stable customerDiscounts :
+    {
+      var root : Node__46230540<Principal, CustomerDiscount__600828801>;
+      var size : Nat__490723111
+    };
+  stable discountTiers :
+    {
+      var root : Node__46230540<Text, DiscountTier__322229867>;
+      var size : Nat__490723111
+    };
+  stable payments :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?PaymentRecord__879948694]];
+      var elementIndex : Nat__490723111
+    };
+  stable pickupIdCounter : {var value : Nat};
+  stable pickups :
+    {
+      var root : Node__46230540<Text, PickupRequest__935325369>;
+      var size : Nat__490723111
+    };
+  stable prices :
+    {
+      var blockIndex : Nat__490723111;
+      var blocks : [var [var ?PriceItem__324255842]];
+      var elementIndex : Nat__490723111
+    };
+  stable qualifyingCounts :
+    {var root : Node__46230540<Principal, Nat>; var size : Nat__490723111};
+  stable users :
+    {
+      var root : Node__46230540<Text, UserProfile__277265826>;
+      var size : Nat__490723111
+    }
+};
